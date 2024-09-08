@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -6,27 +6,25 @@
 </head>
 <body>
   <h1>映画一覧</h1>
-  <%= form_with url: movies_path, local: true, method: :get, class: "search-form" do |f| %>
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <%= f.text_field :name, placeholder: 'キーワードで検索する', class: 'search-input' %>
-  </div>
-  <%= f.submit "検索", class: 'hidden-submit' %> <!-- 非表示のsubmitボタン -->
-  <% end %>
-  <%= form_with model: @movie, local: true ,method: :get do |f| %>
+  <%= form_with url: movies_path, local: true ,method: :get do |f| %>
     <h4>上映中か</h4>
     <div>
-      <%= f.radio_button :is_showing, nil, id: 'all' ,onchange: "this.form.submit();" %>
-      <%= f.label :is_showing, '全て', value: nil, for: 'all' %>
+      <%= f.radio_button :is_showing, nil, id: 'all' %>
+      <%= f.label :is_showing, '全て', value: 2, for: 'all' %>
     </div>
     <div>
-      <%= f.radio_button :is_showing, 1, id: 'showing'  ,onchange: "this.form.submit();" %>
+      <%= f.radio_button :is_showing, 1, id: 'showing'  %>
       <%= f.label :is_showing, '公開中', value: 1, for: 'showing' %>
     </div>
     <div>
-      <%= f.radio_button :is_showing, 0, id: 'not_showing'  ,onchange: "this.form.submit();" %>
+      <%= f.radio_button :is_showing, 0, id: 'not_showing'  %>
       <%= f.label :is_showing, '公開予定', value: 0, for: 'not_showing' %>
     </div>
+      <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <%= f.text_field :name, placeholder: 'キーワードで検索する', class: 'search-input' %>
+    </div>
+    <%= f.submit "検索", class: 'hidden-submit' %> 
   <% end %>
   <table>  
     <tr>
@@ -58,6 +56,59 @@
         <td><%= link_to 'new', '/admin/movies/new' %></td>
 	      <td><%= link_to '編集ad', edit_admin_movie_path(movie) %></td>
         <td><%= link_to '削除', admin_movie_path(movie), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+      </tr>
+    <% end %>
+  </table>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>映画一覧</title>
+</head>
+<body>
+  <h1>映画一覧</h1>
+  <%= form_with url: movies_path, method: :get do |f| %>
+  <%= f.radio_button :is_showing, 'all', checked: params[:is_showing] == 'all' || params[:is_showing].nil? %>
+  <%= f.label :is_showing_all, "全て" %>
+
+  <%= f.radio_button :is_showing, '1', checked: params[:is_showing] == '1' %>
+  <%= f.label :is_showing_1, "公開中" %>
+
+  <%= f.radio_button :is_showing, '0', checked: params[:is_showing] == '0' %>
+  <%= f.label :is_showing_0, "公開予定" %>
+
+  <%= f.text_field :keyword, value: params[:keyword]%>
+  <%= f.submit '検索'%>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>映画タイトル</th>
+      <th>公開年</th>
+      <th>上映中か</th>
+      <th>概要</th>
+      <th>画像URL</th>
+      <th>作成日時</th>
+      <th>更新日時</th>
+      <th>操作</th>
+      <th>管理者</th>
+    </tr>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= movie.id %></td>
+        <td><%= link_to movie.name, movie_path(movie) %></td>
+        <td><%= movie.year %></td>
+        <td><%= movie.is_showing ? '公開中' : '公開予定' %></td>
+        <td><%= movie.description %></td>
+        <td><%= movie.image_url %></td>
+        <td><%= movie.created_at %></td>
+        <td><%= movie.updated_at %></td>
+        <td><%= link_to '編集', movie_path(movie.id) %></td>
+        <td><%= link_to '削除', movie_path(movie), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
       </tr>
     <% end %>
   </table>
