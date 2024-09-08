@@ -6,6 +6,28 @@
 </head>
 <body>
   <h1>映画一覧</h1>
+  <%= form_with url: movies_path, local: true, method: :get, class: "search-form" do |f| %>
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <%= f.text_field :name, placeholder: 'キーワードで検索する', class: 'search-input' %>
+  </div>
+  <%= f.submit "検索", class: 'hidden-submit' %> <!-- 非表示のsubmitボタン -->
+  <% end %>
+  <%= form_with model: @movie, local: true do |f| %>
+    <h4>上映中か</h4>
+    <div>
+      <%= f.radio_button :is_showing, nil, id: 'all' %>
+      <%= f.label :is_showing, '全て', value: nil, for: 'all' %>
+    </div>
+    <div>
+      <%= f.radio_button :is_showing, 1, id: 'showing' %>
+      <%= f.label :is_showing, '公開中', value: 1, for: 'showing' %>
+    </div>
+    <div>
+      <%= f.radio_button :is_showing, 0, id: 'not_showing' %>
+      <%= f.label :is_showing, '公開予定', value: 0, for: 'not_showing' %>
+    </div>
+  <% end %>
   <table>  
     <tr>
       <th>ID </th>
@@ -26,7 +48,7 @@
         <td><%= movie.id %></td>
         <td><%= movie.name %></td>
         <td><%= movie.year %></td>
-        <td><%= movie.is_showing == true ? '上映中' : '上映予定' %></td>
+        <td><%= movie.is_showing == true ? '公開中' : '公開予定' %></td>
         <td><%= movie.description %></td>
         <td><%= movie.image_url %></td>
         <%= link_to movie.name, movie_path(movie) %>

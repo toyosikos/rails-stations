@@ -60,7 +60,7 @@
     </tr>
     <tr>
       <td><%= f.label :is_showing, '上映中か' %></td>
-      <td><%= f.select :is_showing, [['上映中', 1], ['上映予定', 0]], { include_blank: true, selected: 0 } %></td>
+      <td><%= f.select :is_showing, [['公開中', 1], ['公開予定', 0]], { include_blank: true, selected: 0 } %></td>
     <tr>
       <td><%= f.label :image_url, '画像URL' %></td>
       <td><%= f.text_field :image_url %></td>

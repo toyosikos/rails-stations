@@ -9,7 +9,7 @@
 <h4>画像</h4>
 <%= f.text_field :image_url %>
 <h4>上映中か</h4>
-<%= f.select :is_showing,[['上映中',1],['上映予定',0]], { include_blank: true, selected: 0} %>
+<%= f.select :is_showing,[['公開中',1],['公開予定',0]], { include_blank: true, selected: 0} %>
 
 <%= f.submit '保存' %>
 
