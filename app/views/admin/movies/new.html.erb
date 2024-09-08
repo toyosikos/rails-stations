@@ -1,0 +1,75 @@
+<h4>映画情報更新</h4>
+
+<!-- Flashメッセージの表示 -->
+<% if flash[:error].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+<!--
+<%= form_with(model: @movie, url: admin_movies_path, method: :post, local: true) do |f| %>
+  <table>
+    <tr>
+      <td><%= f.label :name, '映画タイトル' %></td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :description, '映画の説明' %></td>
+      <td><%= f.text_area :description %></td>
+    </tr>
+-->
+<!--
+    ここに他のフィールドを追加することもできます（コメント解除）
+    <tr>
+      <td><%= f.label :release_year, '公開年' %></td>
+      <td><%= f.number_field :release_year %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :is_showing, '上映中か' %></td>
+      <td><%= f.select :is_showing, [['上映中', 1], ['上映予定', 0]], { include_blank: true, selected: 0 } %></td>
+    </tr>
+-->
+
+<!--    <tr>
+      <td colspan="2" style="text-align: right;">
+        <%= f.submit 'Save', class: 'btn btn-primary' %>
+        <%= link_to 'Close', movies_path, class: 'btn btn-secondary' %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+-->
+
+<%= form_with(model: @movie, url: admin_movies_path, method: :post, local: true) do |f| %>
+
+  <table>
+    <tr>
+      <td><%= f.label :name, '映画タイトル' %></td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :description, '映画の説明' %></td>
+      <td><%= f.text_area :description %></td>
+    </tr>
+    <tr>
+    <tr>
+      <td><%= f.label :year, '公開年' %></td>
+      <td><%= f.number_field :year %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :is_showing, '上映中か' %></td>
+      <td><%= f.select :is_showing, [['上映中', 1], ['上映予定', 0]], { include_blank: true, selected: 0 } %></td>
+    <tr>
+      <td><%= f.label :image_url, '画像URL' %></td>
+      <td><%= f.text_field :image_url %></td>
+    </tr>
+    </tr>
+      <td colspan="2" style="text-align: right;">
+        <%= f.submit 'Save', class: 'btn btn-primary' %>
+        <%= link_to 'Close', admin_movies_path, class: 'btn btn-secondary' %>
+      </td>
+    </tr>
+  </table>
+<% end %>

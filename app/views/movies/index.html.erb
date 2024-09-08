@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>映画一覧</title>
+</head>
+<body>
+  <h1>映画一覧</h1>
+  <table>  
+    <tr>
+      <th>ID </th>
+      <th>映画タイトル </th>
+      <th>公開年</th>
+      <th>上映中か</th>
+      <th>概要</th>
+      <th>画像URL</th>
+      <th>作成日時</th>
+      <th>更新日時</th>
+      <th>操作</th>
+      <th>管理者</th>
+      <th>管理者2</th>
+      <th>管理者3</th>
+    </tr>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= movie.id %></td>
+        <td><%= movie.name %></td>
+        <td><%= movie.year %></td>
+        <td><%= movie.is_showing == true ? '上映中' : '上映予定' %></td>
+        <td><%= movie.description %></td>
+        <td><%= movie.image_url %></td>
+        <%= link_to movie.name, movie_path(movie) %>
+        <td><%= movie.created_at %></td>
+        <td><%= movie.updated_at %></td>
+        <td><%= link_to '編集', movie_path(movie.id) %></td>
+        <td><%= link_to 'new', '/admin/movies/new' %></td>
+	      <td><%= link_to '編集ad', edit_admin_movie_path(movie) %></td>
+        <td><%= link_to '削除', admin_movie_path(movie), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+      </tr>
+    <% end %>
+  </table>
+</body>
+</html>

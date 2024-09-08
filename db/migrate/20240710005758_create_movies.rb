@@ -1,3 +1,14 @@
+# CreateMovieクラスは`movies`テーブルを作成するためのマイグレーションを定義します。
+# このテーブルは映画の基本情報を管理することを目的としています。
+#
+# == カラム詳細:
+# - name: string, 映画のタイトルを格納します。最大160文字までで、NULLは許可しません。インデックスが追加され、検索性を向上させます。
+# - year: string, 映画の公開年を格納します。最大45文字まで。
+# - description: text, 映画の説明文を格納します。
+# - image_url: string, 映画のポスター画像のURLを格納します。最大150文字まで。
+# - is_showing: boolean, 映画が現在上映中かどうかの状態を格納します。NULLは許可しません。
+# - timestamps: レコードの作成日時と更新日時を自動記録するためのカラムです。
+#
 class CreateMovies < ActiveRecord::Migration[7.1]
   def change
     create_table :movies do |t|
@@ -9,5 +20,6 @@ class CreateMovies < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+    add_index :movies, :name, unique: true
   end
 end

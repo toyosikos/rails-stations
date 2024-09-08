@@ -5,6 +5,15 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Define routes for movies (public access)
+  resources :movies, only: %i[index show] 
+
+  # Admin namespace routes
+  namespace :admin do
+    resources :movies, only: [:index, :new, :create,:edit,:update,:show,:destroy] # admin/movies に関するルートを定義
+    root to: redirect('/admin/movies') # /admin へのアクセスを /admin/movies にリダイレクト
+  end
+
+  # Define the root path route ("/")
+  root "movies#index"
 end
