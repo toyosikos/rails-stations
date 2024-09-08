@@ -2,15 +2,19 @@
 
 class MoviesController < ApplicationController
   def index
+    # キーワードによる検索
     if params[:name].present?
-      # name または description に検索キーワードが含まれる映画を検索
       @movies = Movie.where("name LIKE ? OR description LIKE ?", "%#{params[:name]}%", "%#{params[:name]}%")
     else
-      # 検索キーワードがなければ全ての映画を取得
       @movies = Movie.all
       @message = "映画一覧21"  # メッセージを作成
     end
-  end   
+  
+    # 上映状態でのフィルタリング
+    if params[:is_showing].present?
+      @movies = @movies.where(is_showing: params[:is_showing])
+  end
+    end
     def show
       @movie = Movie.all # 映画のデータを取得
     end    

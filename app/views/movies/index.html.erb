@@ -13,18 +13,18 @@
   </div>
   <%= f.submit "検索", class: 'hidden-submit' %> <!-- 非表示のsubmitボタン -->
   <% end %>
-  <%= form_with model: @movie, local: true do |f| %>
+  <%= form_with model: @movie, local: true ,method: :get do |f| %>
     <h4>上映中か</h4>
     <div>
-      <%= f.radio_button :is_showing, nil, id: 'all' %>
+      <%= f.radio_button :is_showing, nil, id: 'all' ,onchange: "this.form.submit();" %>
       <%= f.label :is_showing, '全て', value: nil, for: 'all' %>
     </div>
     <div>
-      <%= f.radio_button :is_showing, 1, id: 'showing' %>
+      <%= f.radio_button :is_showing, 1, id: 'showing'  ,onchange: "this.form.submit();" %>
       <%= f.label :is_showing, '公開中', value: 1, for: 'showing' %>
     </div>
     <div>
-      <%= f.radio_button :is_showing, 0, id: 'not_showing' %>
+      <%= f.radio_button :is_showing, 0, id: 'not_showing'  ,onchange: "this.form.submit();" %>
       <%= f.label :is_showing, '公開予定', value: 0, for: 'not_showing' %>
     </div>
   <% end %>
