@@ -2,10 +2,29 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Sheets Index</title>
+  <title>座席一覧</title>
 </head>
 <body>
-  <h1>Sheets Index</h1>
-  <!-- 必要なHTMLコンテンツをここに記述 -->
+  <h1>座席一覧</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @sheets.each_slice(5).with_index do |row_sheets, row_index| %>
+        <tr>
+          <% row_sheets.each do |sheet| %>
+            <td><%= sheet.row %> <%= sheet.column %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </body>
 </html>

@@ -23,8 +23,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_08_065640) do
   end
 
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
+    t.bigint "column", null: false
+    t.string "row", limit: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -16,12 +16,6 @@
 # ].each do |movie|
 #     Movie.find_or_create_by!(name: movie[:name])
 #   end
-[
-  "Inception",
-  "The Shawshank Redemption",
-  "The Godfather",
-  "Pulp Fiction",
-  "The Dark Knight"
-].each do |movie_name|
-  Movie.find_or_create_by!(name: movie_name, is_showing: true)  # または false
-end
+
+
+
