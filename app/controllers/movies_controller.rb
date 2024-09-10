@@ -15,9 +15,15 @@ class MoviesController < ApplicationController
   #     @movies = @movies.where(is_showing: params[:is_showing])
   #   end
   # end
-  #   def show
-  #     @movie = Movie.all # 映画のデータを取得
-  #   end    
+  def show
+    @movie = Movie.find_by(id: params[:id])
+    
+    if @movie.nil?
+      redirect_to movies_path, alert: "Movie not found"
+    else
+      @schedules = Schedule.where(movie_id: @movie.id) # 映画に紐づく上映スケジュールを取得
+    end
+  end  
   def index
   @movies = Movie.all
   # ランキングページからの遷移
