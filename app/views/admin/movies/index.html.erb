@@ -1,68 +1,56 @@
-<!-- <h1>映画一覧</h1>
 
-<table>  
-    <tr>
-      <th>ID </th>
-      <th>映画タイトル </th>
-      <th>公開年</th>
-      <th>上映中か</th>
-      <th>概要</th>
-      <th>画像URL</th>
-      <th>作成日時</th>
-      <th>更新日時</th>
-    </tr>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td><%= movie.id %></td>
-        <td><%= movie.name %></td>
-        <td><%= movie.year %></td>
-        <td><%= movie.is_showing == true ? '上映中' : '上映予定' %></td>
-        <td><%= movie.description %></td>
-        <td><%= movie.image_url %></td>
-        <%= link_to movie.name, movie_path(movie) %>
-        <td><%= movie.created_at %></td>
-        <td><%= movie.updated_at %></td>
-      </tr>
-    <% end %>
-  </table>
-!-->
-<!-- app/views/admin/movies/new.html.erb -->
-<!-- app/views/admin/movies/new.html.erb -->
-<h1>映画登録</h1>
-<%= link_to '登録フォーム', '/admin/movies/new' %>
-<%= link_to '一覧', movies_path %>
-<%= form_with(model: @movie, url: admin_movies_path, method: :post, local: true) do |form| %>
-  <table>
-    <tr>
-      <td><%= form.label :title, '映画タイトル' %></td>
-      <td><%= form.text_field :title %></td>
-    </tr>
 
-    <tr>
-      <td><%= form.label :release_year, '公開年' %></td>
-      <td><%= form.number_field :release_year %></td>
-    </tr>
 
-    <tr>
-      <td><%= form.label :currently_showing, '上映中か' %></td>
-      <td><%= form.select :currently_showing, [['はい', true], ['いいえ', false]] %></td>
-    </tr>
-
-    <tr>
-      <td><%= form.label :summary, '概要' %></td>
-      <td><%= form.text_area :summary %></td>
-    </tr>
-
-    <tr>
-      <td><%= form.label :image_url, '画像URL' %></td>
-      <td><%= form.text_field :image_url %></td>
-    </tr>
-
-    <tr>
-      <td colspan="2" style="text-align: right;">
-        <%= form.submit 'Save', class: 'btn btn-primary' %>
-        <%= link_to 'Close', movies_path, class: 'btn btn-secondary' %>
-      </td>
-    </tr>
-  </table>
-<% end %>
+<div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <p class="fs-2 fw-bold">映画一覧</p>
+        <div class = "col-4">
+            <%= form_with url: new_admin_movie_path, method: :get do |f|%>
+                <%= f.submit '新規映画登録画面へ', class: 'btn btn-primary mt-3' %>
+            <% end %>
+        </div>
+            <table class = "table mt-3">
+                <thead>
+                    <tr class = "table-primary">
+                        <th>ID</th>
+                        <th>映画タイトル</th>
+                        <th>公開年</th>
+                        <th>上映中か</th>
+                        <th>概要</th>
+                        <th>画像URL</th>
+                        <th>画像だしますか</th>
+                        <th>作成日時</th>
+                        <th>更新日時</th>
+                        <th>スケジュール</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <% @movies.each do |movie| %>
+                    <tr>
+                        <td><%= movie.id %></td>
+                        <td><%= link_to movie.name, admin_movie_path(movie)%></td>
+                        <td><%= movie.year %></td>
+                        <td>
+                            <% if movie.is_showing %>
+                                上映中
+                            <% else %>
+                                上映予定
+                            <% end %>
+                        </td>
+                        <td><%= movie.description %></td>
+                        <td><%= movie.image_url %></td>
+                        <td><img src="<%= movie.image_url %>" alt="Movie Image"></td>
+                        <td><%= movie.created_at %></td>
+                        <td><%= movie.updated_at %></td>
+                        <td><%= link_to '編集', edit_admin_movie_path(movie) %></td>
+                        <td>
+                            <% movie.schedules.each do |schedule|%>
+                                <%= "上映開始時刻:#{schedule.start_time.strftime("%Y-%m-%d %H:%M:%S")}" %>
+                                <%= "上映終了時刻:#{schedule.end_time.strftime("%Y-%m-%d %H:%M:%S")}" %><br>
+                            <% end %>
+                        </td>
+                    </tr>
+                <% end %>
+            </table>
+    </div>
+</div>

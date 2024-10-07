@@ -16,12 +16,12 @@ class MoviesController < ApplicationController
   #   end
   # end
   def show
-    @movie = Movie.find_by(id: params[:id])
+    @movie = Movie.find(params[:id]) # パラメータに含まれる映画IDを元に映画を取得
     
     if @movie.nil?
       redirect_to movies_path, alert: "Movie not found"
     else
-      @schedules = Schedule.where(movie_id: @movie.id) # 映画に紐づく上映スケジュールを取得
+      @schedules = @movie.schedules
     end
   end  
   def index

@@ -1,0 +1,37 @@
+<h2>詳細ページ</h2>
+<table>
+<tr>
+<th>映画名</th>
+<th>日付</th>
+<th>時刻</th>
+<th>スクリーン番号</th>
+<th>映画館名</th>
+</tr>
+
+<tr>
+<td><%= @schedule.movie.name %></td>
+<td><%= @schedule.schedule_date %></td>
+<td><%= @schedule.start_time.strftime('%H:%M') + "～" + @schedule.end_time.strftime('%H:%M') %></td>
+
+</tr>
+</table>
+
+<%= form_with model: [:admin, @schedule] do |f| %>
+<table>
+<tr>
+<th>映画名</th>
+<th>日付</th>
+<th>時刻</th>
+
+</tr>
+
+<tr>
+<td><%= f.collection_select :movie_id, @movies, :id, :name %></td>
+<td><%= f.date_select :schedule_date %></td>
+<td><%= f.time_select :start_time %></td>
+<td><%= f.time_select :end_time %></td>
+
+<td><%= f.submit '更新' %>
+</tr>
+</table>
+<% end %>

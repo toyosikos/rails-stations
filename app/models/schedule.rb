@@ -1,5 +1,8 @@
 class Schedule < ApplicationRecord
-    # 必要なコードをここに追加
     belongs_to :movie
-end
+    has_many :reservations
   
+    def display_time
+      "#{start_time.strftime('%H:%M')} - #{end_time.strftime('%H:%M')}"
+    end
+  end

@@ -1,0 +1,36 @@
+<h1>上映一覧</h1>
+<%= link_to '新しいスケジュールを作成', new_admin_schedule_path, class: 'btn btn-primary' %>
+
+<table class ="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>映画名</th>
+            <th>開始時間</th>
+            <th>終了時間</th>
+            <th>作成日時</th>
+            <th>更新日時</th>
+            <th>wakaran</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @schedules.each do |schedule| %>
+        <tr>
+            <td><%= schedule.id %></td>
+            <td>
+                <% if schedule.movie.present? %>
+                    <%= link_to schedule.movie.name, edit_admin_schedule_path(schedule) %>
+                <% else %>
+                    N/A
+                <% end %>
+            </td>
+            <td><%= schedule.start_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+            <td><%= schedule.end_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+            <td><%= schedule.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+            <td><%= schedule.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+            <td><%= schedule.start_time.strftime('%H:%M') + "～" + schedule.end_time.strftime('%H:%M') %></td>       
+            sa
+        </tr>
+        <% end %>
+    </tbody>
+</table>

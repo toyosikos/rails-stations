@@ -1,12 +1,25 @@
 <h1>作品紹介</h1>
 <a href="/movies">Return</a>
 <h2>作品名</h2>
-<%= @movie.name %>
-<%= @movie.year %>
-<%= @movie.description %>
-<img src="<%= @movie.image_url %>" alt="Movie Image" width="300" height="200">
-<h2>上映中スケジュール2</h2>
-<% @movie.schedules.each do |schedule| %>
-  <p>開始時間: <%= schedule.start_time.strftime('%H:%M') %></p>
-  <p>終了時間: <%= schedule.end_time.strftime('%H:%M') %></p>
-<% end %>
+<h2>作品名<%= @movie.name %></h2><br>
+<h2>公開年<%= @movie.year %></h2><br>
+<h2>概要<%= @movie.description %></h2><br>
+<img src="<%= @movie.image_url %>" alt="Movie Image">
+<h2>上映中か<%= @movie.is_showing == true ? '上映中' : '上映予定' %></h2><br>
+<h2>上映スケジュール</h2>
+                <table class = "table">
+                    <thead>
+                        <tr>
+                            <th>開始時刻</th>
+                            <th>終了時刻</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @schedules.each do |schedule|%>
+                            <tr>
+                                <td><%= schedule.start_time.strftime("%Y-%m-%d %H:%M") %></td>
+                                <td><%= schedule.end_time.strftime("%Y-%m-%d %H:%M") %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>

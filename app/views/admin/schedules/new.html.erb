@@ -1,0 +1,15 @@
+<div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <div class = "col-4">
+            <%= form_with model: @schedule, url: admin_movie_schedules_path do |f| %>
+                    <%= f.label :movie_id, "上映映画ID", class: "form-label" %>
+                    <%= f.text_field :movie_id, class: "form-control", value: params[:movie_id] %>
+                    <%= f.label :start_time, "上映開始時刻", class: "form-label" %>
+                    <%= f.datetime_field :start_time, class: "form-control" %>
+                    <%= f.label :end_time, "上映終了時刻", class: "form-label" %>
+                    <%= f.datetime_field :end_time, class: "form-control" %>
+                    <%= f.submit "確定", class: "btn btn-primary mt-2"%>
+            <% end %>
+        </div>
+    </div>
+</div>
