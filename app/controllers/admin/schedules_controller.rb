@@ -5,6 +5,7 @@ class Admin::SchedulesController < ApplicationController
 
   def show
     @schedule = Schedule.find(params[:id])
+    @movies = Movie.all
   end
 
   def new
