@@ -31,7 +31,8 @@ Rails.application.routes.draw do
   resources :movies, only: %i[index show] 
   resources :schedules, only: %i[index show]
   resources :sheets
-
+  resources :reservations
+  
   namespace :admin do
     resources :movies do
       resources :schedules # スケジュールをネスト

@@ -7,6 +7,8 @@
 <img src="<%= @movie.image_url %>" alt="Movie Image">
 <h2>上映中か<%= @movie.is_showing == true ? '上映中' : '上映予定' %></h2><br>
 <h2>上映スケジュール</h2>
+            <%= button_to '座席を予約する', movie_path(@movie), method: :get, class: 'btn btn-primary' %>  <%# これじゃだめ　%>
+
                 <table class = "table">
                     <thead>
                         <tr>
