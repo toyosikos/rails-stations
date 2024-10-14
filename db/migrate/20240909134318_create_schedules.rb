@@ -7,7 +7,7 @@ class CreateSchedules < ActiveRecord::Migration[7.1]
 
 
       t.timestamps
-      t.index [:movie_id, :start_time, :end_time], unique: true, name: 'index_schedules_on_unique_combination'
+      t.index [:start_time, :end_time], unique: true, name: 'index_schedules_on_unique_combination'
     end
         # インデックスの追加
     

@@ -19,3 +19,8 @@
 
 
 
+# db/seeds.rb
+5.times do |i|
+    Sheet.create(row: i + 1, column: 1)
+  end
+  

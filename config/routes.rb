@@ -28,10 +28,15 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :movies, only: %i[index show] 
-  resources :schedules, only: %i[index show]
+  post 'reservations' => 'reservations#create'
   resources :sheets
-  resources :reservations
+  resources :movies, only: %i[index show] do
+    resources :schedules do
+      resources :reservations, only: %i[new create]
+    end
+    resource :favorites, only: [:create, :destroy]
+    get 'reservation' => 'movies#reservation'
+  end
   
   namespace :admin do
     resources :movies do

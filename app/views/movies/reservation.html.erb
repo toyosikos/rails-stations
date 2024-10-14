@@ -1,0 +1,19 @@
+<h1><%= "#{@date}の予約画面" %></h1>
+<%= flash[:error] %>
+<table>
+
+<%= form_with url: new_movie_schedule_reservation_path(@movie, @schedule), local: true, method: :get do |f| %>
+  <% @sheets.each do |sheet| %>
+  <% if Reservation.exists?(sheet_id: sheet.id, schedule_id: @schedule) %>
+    <tr>
+      <td><%= button_tag sheet.id, name: :sheet_id, value: sheet.id, class: "CheckedOut", disabled: true %></td>
+    </tr>
+  <% else %>
+    <tr>
+        <td><%= button_tag sheet.id, name: :sheet_id, value: sheet.id, class: "NotYet" %></td>
+    </tr>
+  <% end %>
+<% end %>
+
+<% end %>
+</table>
