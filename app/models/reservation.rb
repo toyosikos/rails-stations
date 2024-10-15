@@ -1,7 +1,7 @@
 class Reservation < ApplicationRecord
     belongs_to :schedule
     belongs_to :sheet
-    belongs_to :movie
+    belongs_to :movie, optional: true
     
     validates :email, presence: true, length: { maximum: 255 },
                       format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
