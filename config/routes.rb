@@ -34,7 +34,6 @@ Rails.application.routes.draw do
     resources :schedules do
       resources :reservations, only: %i[new create]
     end
-    resource :favorites, only: [:create, :destroy]
     get 'reservation' => 'movies#reservation'
   end
   
