@@ -1,0 +1,52 @@
+<div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <h1>上映詳細</h1>
+        <div class="col-4">
+            <%= image_tag @movie.image_url, size: "150x150"%>
+        </div>
+
+        <div class="col-4">
+            <div class = "bg-primary text-white">
+                <% if @movie.is_showing%>
+                    公開中
+                <% else %>
+                    公開予定
+                <% end %>
+            </div>
+            <div class = "bg-primary text-white mt-2">
+                <%= @movie.name%>
+            </div>
+            <div class = "bg-primary text-white mt-2">
+                <%= @movie.year %>年公開
+            </div>
+            <div class = "bg-primary text-white mt-2">
+                <%= @movie.description%>
+            </div>
+        </div>
+
+        <div class = "col-8">
+            <div class = "bg-primary text-white mt-5">
+                上映スケジュール
+            </div>
+            <%= link_to 'スケジュールの登録', new_admin_movie_schedule_path(@movie) %>
+                <table class = "table">
+                    <thead>
+                        <tr>
+                            <th>開始時刻</th>
+                            <th>終了時刻</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @schedules.each do |schedule|%>
+                        <tr>
+                            <td><%= schedule.start_time.strftime("%Y-%m-%d %H:%M") %></td>
+                            <td><%= schedule.end_time.strftime("%Y-%m-%d %H:%M") %></td>
+                            <td><%= link_to '編集', edit_admin_schedule_path(schedule) %></td>
+                        </tr>
+                        <% end %>   
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>

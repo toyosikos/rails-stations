@@ -20,6 +20,6 @@ class CreateMovies < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
-    add_index :movies, :name, unique: true
+    add_index :movies, :name, unique: true unless index_exists?(:movies, :name)
   end
 end

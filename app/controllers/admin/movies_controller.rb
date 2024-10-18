@@ -5,6 +5,10 @@ class Admin::MoviesController < ApplicationController
   def new
     @movie = Movie.new
   end
+  def show
+    @movie = Movie.find(params[:id])
+    @schedules = @movie.schedules
+  end
   def create
     @movie = Movie.new(movie_params)
     if @movie.save

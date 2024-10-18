@@ -24,14 +24,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_09_150426) do
 
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date", null: false
-    t.bigint "movie_id", null: false
     t.bigint "schedule_id", null: false
     t.bigint "sheet_id", null: false
     t.string "email", null: false, comment: "予約者メールアドレス"
     t.string "name", limit: 50, null: false, comment: "予約者名"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["movie_id"], name: "index_reservations_on_movie_id"
+    t.index ["date", "schedule_id", "sheet_id"], name: "index_reservations_on_date_and_ids", unique: true
     t.index ["schedule_id"], name: "index_reservations_on_schedule_id"
     t.index ["sheet_id"], name: "index_reservations_on_sheet_id"
   end
@@ -42,7 +41,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_09_150426) do
     t.time "end_time", null: false, comment: "上映終了時刻"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["movie_id", "start_time", "end_time"], name: "index_schedules_on_unique_combination", unique: true
+    t.index ["start_time", "end_time"], name: "index_schedules_on_unique_combination", unique: true
   end
 
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -52,7 +51,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_09_150426) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "reservations", "movies"
   add_foreign_key "reservations", "schedules"
   add_foreign_key "reservations", "sheets"
 end
