@@ -7,6 +7,8 @@ class ReservationsController < ApplicationController
     @date = params[:date]
     @sheet = params[:sheet_id]
     @schedule = Schedule.find(params[:schedule_id])
+    @theater = Theater.find(params[:theater_id])
+    @screen = Screen.find(params[:screen_id])
     
    
 
@@ -44,7 +46,7 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:date, :sheet_id, :schedule_id, :email, :name,:user_id)
+    params.require(:reservation).permit(:date, :sheet_id, :schedule_id, :email, :name,:user_id, :theater_id, :screen_id)
   end
 
 

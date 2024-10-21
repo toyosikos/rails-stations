@@ -21,7 +21,8 @@ class MoviesController < ApplicationController
     @schedule = Schedule.find(params[:schedule_id])
     @date = params[:date]
     @sheets = Sheet.all
-
+    @theater = params[:theater_id]
+    @screen = params[:screen_id]
     # ここで座席表の情報を取得する処理を追加
   end
   def index

@@ -1,9 +1,16 @@
 class Admin::MoviesController < ApplicationController
   def index
     @movies = Movie.all  # すべての映画を取得
+    @theaters = Theater.all
   end
   def new
     @movie = Movie.new
+    if params[:theater_id].present?
+      @theater = Theater.find(params[:theater_id])
+      @screens = @theater.screens
+    else
+      redirect_to admin_movies_path
+    end
   end
   def show
     @movie = Movie.find(params[:id])
@@ -11,6 +18,8 @@ class Admin::MoviesController < ApplicationController
   end
   def create
     @movie = Movie.new(movie_params)
+    @theater = Theater.find(params[:movie][:theater_id])
+    @screens = @theater.screens
     if @movie.save
       # 保存が成功した場合、映画一覧ページへリダイレクト
       redirect_to admin_movies_path, notice: '映画が作成されました'
@@ -47,6 +56,6 @@ class Admin::MoviesController < ApplicationController
   private
 
   def movie_params
-    params.require(:movie).permit(:name, :description ,:year,:is_showing, :image_url)
+    params.require(:movie).permit(:Screen_id,:name, :description ,:year,:is_showing, :image_url)
   end
 end

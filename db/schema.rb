@@ -17,22 +17,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_09_150426) do
     t.text "description", comment: "映画の説明文"
     t.string "image_url", limit: 150, comment: "映画のポスター画像が格納されているURL"
     t.boolean "is_showing", null: false, comment: "上映中かどうか"
+    t.bigint "screen_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_movies_on_name"
+    t.index ["screen_id"], name: "index_movies_on_screen_id"
   end
 
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date", null: false
     t.bigint "schedule_id", null: false
     t.bigint "sheet_id", null: false
+    t.bigint "screen_id", null: false
+    t.bigint "theater_id", null: false
     t.string "email", null: false, comment: "予約者メールアドレス"
     t.string "name", limit: 50, null: false, comment: "予約者名"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["date", "schedule_id", "sheet_id"], name: "index_reservations_on_date_and_ids", unique: true
+    t.index ["date", "schedule_id", "sheet_id", "screen_id", "theater_id"], name: "index_reservations_on_date_and_ids", unique: true
     t.index ["schedule_id"], name: "index_reservations_on_schedule_id"
+    t.index ["screen_id"], name: "index_reservations_on_screen_id"
     t.index ["sheet_id"], name: "index_reservations_on_sheet_id"
+    t.index ["theater_id"], name: "index_reservations_on_theater_id"
   end
 
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -44,6 +50,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_09_150426) do
     t.index ["start_time", "end_time"], name: "index_schedules_on_unique_combination", unique: true
   end
 
+  create_table "screens", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "screen_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "column", null: false
     t.string "row", limit: 1, null: false
@@ -51,6 +63,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_09_150426) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "theaters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "movies", "screens"
   add_foreign_key "reservations", "schedules"
+  add_foreign_key "reservations", "screens"
   add_foreign_key "reservations", "sheets"
+  add_foreign_key "reservations", "theaters"
 end
