@@ -1,75 +1,40 @@
-<h4>映画情報更新</h4>
+<div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <div class = "col-4">
+            <% if @movie.errors.any? %>
+            <ul>
+                <% @movie.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+                <% end %>
+            </ul>
+            <% end %>
 
-<!-- Flashメッセージの表示 -->
-<% if flash[:error].present? %>
-  <div class="alert alert-danger">
-    <%= flash[:error] %>
-  </div>
-<% end %>
-<!--
-<%= form_with(model: @movie, url: admin_movies_path, method: :post, local: true) do |f| %>
-  <table>
-    <tr>
-      <td><%= f.label :name, '映画タイトル' %></td>
-      <td><%= f.text_field :name %></td>
-    </tr>
+            <%= form_with model: [:admin, @movie] do |f| %>
+                <%= f.label :theater_id, "劇場", class: 'form-label' %>
+                <%= f.hidden_field :theater_id, value: @theater.id %>
+                <%= f.text_field :theater_name, value: @theater.name, class: 'form-control text-center', readonly: true, disabled: true %>
 
-    <tr>
-      <td><%= f.label :description, '映画の説明' %></td>
-      <td><%= f.text_area :description %></td>
-    </tr>
--->
-<!--
-    ここに他のフィールドを追加することもできます（コメント解除）
-    <tr>
-      <td><%= f.label :release_year, '公開年' %></td>
-      <td><%= f.number_field :release_year %></td>
-    </tr>
+                <%= f.label :screen_id, "スクリーン番号", class: 'form-label' %>
+                <%= f.select :screen_id, options_from_collection_for_select(@screens, :id, :screen_number), {}, class: 'form-select text-center' %>
 
-    <tr>
-      <td><%= f.label :is_showing, '上映中か' %></td>
-      <td><%= f.select :is_showing, [['上映中', 1], ['上映予定', 0]], { include_blank: true, selected: 0 } %></td>
-    </tr>
--->
+                <%= f.label :name, "映画タイトル", class: 'form-label' %>
+                <%= f.text_field :name, class: 'form-control text-center' %>
 
-<!--    <tr>
-      <td colspan="2" style="text-align: right;">
-        <%= f.submit 'Save', class: 'btn btn-primary' %>
-        <%= link_to 'Close', movies_path, class: 'btn btn-secondary' %>
-      </td>
-    </tr>
-  </table>
-<% end %>
--->
+                <%= f.label :year, "公開年", class: 'form-label' %>
+                <%= f.text_field :year, class: 'form-control text-center' %>
 
-<%= form_with(model: @movie, url: admin_movies_path, method: :post, local: true) do |f| %>
+                <%= f.label :is_showing, "上映中か", class: 'form-label' %>
+                <%= f.select :is_showing, [["上映中", true], ["上映予定", false]], {}, class: 'form-select text-center'%>
 
-  <table>
-    <tr>
-      <td><%= f.label :name, '映画タイトル' %></td>
-      <td><%= f.text_field :name %></td>
-    </tr>
-    <tr>
-      <td><%= f.label :description, '映画の説明' %></td>
-      <td><%= f.text_area :description %></td>
-    </tr>
-    <tr>
-    <tr>
-      <td><%= f.label :year, '公開年' %></td>
-      <td><%= f.number_field :year %></td>
-    </tr>
-    <tr>
-      <td><%= f.label :is_showing, '上映中か' %></td>
-      <td><%= f.select :is_showing, [['公開中', 1], ['公開予定', 0]], { include_blank: true, selected: 0 } %></td>
-    <tr>
-      <td><%= f.label :image_url, '画像URL' %></td>
-      <td><%= f.text_field :image_url %></td>
-    </tr>
-    </tr>
-      <td colspan="2" style="text-align: right;">
-        <%= f.submit 'Save', class: 'btn btn-primary' %>
-        <%= link_to 'Close', admin_movies_path, class: 'btn btn-secondary' %>
-      </td>
-    </tr>
-  </table>
-<% end %>
+                <%= f.label :description, "概要", class: 'form-label' %>
+                <%= f.text_area :description, class: 'form-control text-center' %>
+
+                <%= f.label :image_url, "画像URL", class: 'form-label' %>
+                <%= f.text_field :image_url, class: 'form-control text-center' %>
+
+                <%= f.submit "作成", class: 'btn btn-primary mt-4' %>
+            <% end %>
+            <%= link_to '戻る', admin_movies_path%>
+        </div>
+    </div>
+</div>

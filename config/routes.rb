@@ -39,14 +39,16 @@ Rails.application.routes.draw do
   end
   
   namespace :admin do
+    resources :theaters, only: %i[new create]
+    resources :screens, only: %i[new create]
     resources :reservations
     resources :movies do
-      resources :schedules # スケジュールをネスト
+      resources :schedules, only: %i[new create] # スケジュールをネスト
     end
     
 
     # Admin直下でのスケジュールアクセスを追加
-    resources :schedules, only: %i[index show new create edit update destroy]
+    resources :schedules, except: %i[new create]
 
     root to: redirect('/admin/movies')
   end

@@ -6,20 +6,22 @@ class ReservationsController < ApplicationController
     @movie = Movie.find_by(id: params[:movie_id])
     @date = params[:date]
     @sheet = params[:sheet_id]
-    @schedule = Schedule.find(params[:schedule_id])
-    @theater = Theater.find(params[:theater_id])
-    @screen = Screen.find(params[:screen_id])
+    @schedule = params[:schedule_id]
+    @theater = params[:theater_id]
+    @screen = params[:screen_id]
     
    
 
     unless @movie
       flash.now[:alert] = '映画が選択されていません'
       redirect_to movies_path, status: :bad_request
+      return
     end
 
     if !@date || !@sheet
       flash.now[:alert] = '必要なパラメータがありません。'
       render :new, status: :bad_request
+      return
     end
   end
 

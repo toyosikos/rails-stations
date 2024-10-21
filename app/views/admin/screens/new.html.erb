@@ -1,0 +1,14 @@
+<div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <div class = "col-4">
+            <%= form_with model: [:admin, @screen] do |f| %>
+                <%= f.label :theater_id, "劇場", class: 'form-label' %>
+                <%= f.select :theater_id, options_from_collection_for_select(@theaters, :id, :name), {}, class: 'form-select text-center' %>
+
+                <%= f.label :screen_number, "スクリーン番号", class: 'form-label' %>
+                <%= f.number_field :screen_number, class: 'form-select text-center' %>
+                <%= f.submit "作成", class: 'btn btn-primary mt-4' %>
+            <% end %>
+        </div>
+    </div>
+</div>

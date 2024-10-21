@@ -1,11 +1,10 @@
-
-
-
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
         <p class="fs-2 fw-bold">映画一覧</p>
         <div class = "col-4">
             <%= form_with url: new_admin_movie_path, method: :get do |f|%>
+                <%= f.label :theater_id, "劇場", class: 'form-label' %>
+                <%= f.select :theater_id, options_from_collection_for_select(@theaters, :id, :name), {}, class: 'form-select text-center' %>
                 <%= f.submit '新規映画登録画面へ', class: 'btn btn-primary mt-3' %>
             <% end %>
         </div>
@@ -18,10 +17,11 @@
                         <th>上映中か</th>
                         <th>概要</th>
                         <th>画像URL</th>
-                        <th>画像だしますか</th>
+                        <th>スケジュール</th>
+                        <th>劇場</th>
+                        <th>スクリーン</th>
                         <th>作成日時</th>
                         <th>更新日時</th>
-                        <th>スケジュール</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -37,18 +37,19 @@
                                 上映予定
                             <% end %>
                         </td>
-                        <td><%= movie.description %></td>
-                        <td><%= movie.image_url %></td>
-                        <td><img src="<%= movie.image_url %>" alt="Movie Image"></td>
-                        <td><%= movie.created_at %></td>
-                        <td><%= movie.updated_at %></td>
-                        <td><%= link_to '編集', edit_admin_movie_path(movie) %></td>
+                        <td><%= safe_join(movie.description.split("\n"),tag(:br)) %></td>
+                        <td><%= image_tag movie.image_url, size: "100x100" %></td>
                         <td>
                             <% movie.schedules.each do |schedule|%>
                                 <%= "上映開始時刻:#{schedule.start_time.strftime("%Y-%m-%d %H:%M:%S")}" %>
                                 <%= "上映終了時刻:#{schedule.end_time.strftime("%Y-%m-%d %H:%M:%S")}" %><br>
                             <% end %>
                         </td>
+                        <td><%=  Theater.find(movie.theater_id).name %></td>
+                        <td><%= movie.screen_id %></td>
+                        <td><%= movie.created_at %></td>
+                        <td><%= movie.updated_at %></td>
+                        <td><%= link_to '編集', edit_admin_movie_path(movie) %></td>
                     </tr>
                 <% end %>
             </table>
