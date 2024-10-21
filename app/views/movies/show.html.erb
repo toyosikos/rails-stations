@@ -10,9 +10,7 @@
 <br>
 <h2>上映スケジュール</h2>
 <h2>上映スケジュール</h2>
-<% @movie.schedules.each do |schedule| %>
-  <%= link_to '座席を予約する', new_movie_schedule_reservation_path(movie_id: @movie.id, schedule_id: schedule.id) %>
-<% end %>
+
 <br>
 <table class = "table">
     <thead>

@@ -30,18 +30,20 @@ Rails.application.routes.draw do
 
   post 'reservations' => 'reservations#create'
   resources :sheets
+  
   resources :movies, only: %i[index show] do
     resources :schedules do
-      resources :reservations, only: %i[new create]
+      resources :reservations
     end
     get 'reservation' => 'movies#reservation'
   end
   
   namespace :admin do
+    resources :reservations
     resources :movies do
       resources :schedules # スケジュールをネスト
     end
-    resources :reservations, only: %i[index show destroy new]
+    
 
     # Admin直下でのスケジュールアクセスを追加
     resources :schedules, only: %i[index show new create edit update destroy]
