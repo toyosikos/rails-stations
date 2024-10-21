@@ -1,0 +1,28 @@
+<div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <p class="fs-2 fw-bold">予約作成</p>
+        <div class = "col-4">
+            <%= form_with model: [:admin, @reservation_new] do |f|%>
+                <%= f.label :name, '予約者氏名', class: 'form-label'%>
+                <%= f.text_field :name, class: 'form-control text-center'%>
+
+                <%= f.label :email, '予約者Email', class: 'form-label'%>
+                <%= f.text_field :email, class: 'form-control text-center'%>
+
+                <%= f.label :movie_id, '予約映画タイトル', class: 'form-label'%>
+                <%= f.select :movie_id, options_from_collection_for_select(@movies, :id, :name), {}, class: "form-select text-center" %>
+
+                <%= f.label :date, '予約時間', class: 'form-label'%>
+                <%= f.date_field :date, class: 'form-control text-center'%>
+
+                <%= f.label :schedule_id, '予約スケジュール', class: 'form-label'%>
+                <%= f.select :schedule_id, options_from_collection_for_select(@schedules, :id, :display_time), {},  class: "form-select text-center" %>
+
+                <%= f.label :sheet_id, '座席', class: 'form-label'%>
+                <%= f.select :sheet_id, options_from_collection_for_select(@sheets, :id, :id), {},  class: 'form-select text-center'%>
+
+                <%= f.submit "予約", class: 'btn btn-primary mt-3'%>
+            <% end %>
+        </div>
+    </div>
+</div>

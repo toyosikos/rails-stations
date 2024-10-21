@@ -1,0 +1,36 @@
+    <div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <%= flash[:notice] %>
+        <p class="fs-2 fw-bold">予約一覧</p>
+        <%= link_to '新規予約作成', new_admin_reservation_path, class: "mb-5"%>
+        <table class = "table">
+            <thead>
+                <tr class = "table-primary">
+                    <th>ID</th>
+                    <th>映画タイトル</th>
+                    <th>sheet_id</th>
+                    <th>日時</th>
+                    <th>名前</th>
+                    <th>メールアドレス</th>
+                    <th>作成日時</th>
+                    <th>更新日時</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @reservations.each do |reservation| %>
+                    <tr>
+                        <td><%= reservation.id %></td>
+                        <td><%= reservation.movie.name %></td>
+                        <td><%= reservation.sheet_id %></td>
+                        <td><%= reservation.date %></td>
+                        <td><%= reservation.name %></td>
+                        <td><%= reservation.email %></td>
+                        <td><%= reservation.created_at %></td>
+                        <td><%= reservation.updated_at %></td>
+                        <td><%= link_to '編集', admin_reservation_path(reservation)%></td>
+                    </tr>
+                <% end %>
+            </tbody>
+    </div>
+</div>

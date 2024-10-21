@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new
     @schedule = Schedule.find_by(id: params[:schedule_id])
     @movie = Movie.find_by(id: params[:movie_id])
-    
+    @date = params[:date]
     # スケジュールが見つからない場合は404を返す
     unless @schedule
       head :not_found # 404 Not Found を返す
@@ -32,7 +32,7 @@ class ReservationsController < ApplicationController
         handle_failed_reservation
       end
     rescue ActiveRecord::RecordNotUnique
-      handle_unique_violation
+      handle_failed_reservation
     end
   
     private
@@ -47,15 +47,11 @@ class ReservationsController < ApplicationController
     end
   
     def handle_failed_reservation
+      flash[:error] = 'その座席はすでに予約済みです'
       redirect_to movie_reservation_path(@reservation.schedule.movie.id,
-                                       schedule_id: @reservation.schedule_id)
-      flash[:error] = 'その座席はすでに予約済みです'
-    end
-  
-    def handle_unique_violation
-      flash[:error] = 'その座席はすでに予約済みです'
-      redirect_to new_reservation_path(movie_id: @reservation.schedule.movie.id,
-                                       schedule_id: @reservation.schedule_id)
+                                       schedule_id: @reservation.schedule_id,
+                                       date: params[:date])
+      
     end
     def set_current_user
         @current_user = current_user # current_userがnilでないことを確認する

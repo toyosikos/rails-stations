@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     resources :movies do
       resources :schedules # スケジュールをネスト
     end
-    resources :reservations, only: %i[index show destroy]
+    resources :reservations, only: %i[index show destroy new]
 
     # Admin直下でのスケジュールアクセスを追加
     resources :schedules, only: %i[index show new create edit update destroy]
